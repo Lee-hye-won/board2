@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUtil {
 	
+	// 확인
 	// 전체페이지의 갯수를 구한다.
 	public int getPageCount(int numPerPage, int dataCount) {
 		int pageCount = 0;
