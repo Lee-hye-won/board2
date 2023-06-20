@@ -33,5 +33,28 @@ public class BoardServiceImpl implements BoardService{
 	public List<Board> getLists(String searchKey, String searchValue, int start, int end) throws Exception{
 		return boardMapper.getLists(searchKey, searchValue, start, end);
 	}
+
+	@Override
+	public void updateHitCount(int num) throws Exception {
+		boardMapper.updateHitCount(num);
+		
+	}
+
+	@Override
+	public Board getReadData(int num) throws Exception {
+		return boardMapper.getReadData(num);
+	}
+
+	@Override
+	public void updateData(Board board) throws Exception {
+		boardMapper.updateData(board);
+		
+	}
+
+	@Override
+	public void deleteData(int num) throws Exception {
+		boardMapper.deleteData(num);
+		
+	}
 	
 }

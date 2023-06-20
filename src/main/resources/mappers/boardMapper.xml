@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getDataCount" parameterType="map" resultType="int" >
-		select nvl(count(*), 0) from board where #{searchKey} like '% || #{searchValue} || %'
+		select nvl(count(*), 0) from board where ${searchKey} like '%' || #{searchValue} || '%'
 	</select>
 	
 	<select id="getLists" parameterType="map" resultType="Board">
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	select rownum rnum, data.* from (
         	select num, name, subject, hitCount, to_char(created, 'YYYY-MM-DD') created 
         	from board
-        	where #{searchKey} like '% || #{searchValue} || %'
+        	where ${searchKey} like '%' || #{searchValue} || '%'
         	order by num desc
     		) data
 		)
@@ -31,4 +31,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where rnum >= #{start} and rnum <= #{end}
 		]]>
 	</select>
+	
+	<update id="updateHitCount" parameterType="int">
+		update board set hitCount = hitCount + 1 where num = #{num}
+	</update>
+	
+	<select id="getReadData" parameterType="int" resultType="Board">
+		select * from board where num = #{num}
+	</select>
+	<update id="updateData" parameterType="Board">
+		update board set name = #{name}, pwd = #{pwd}, email = #{email}, subject = #{subject}, content = #{content} where num = #{num}		
+	</update>
+	<delete id="deleteData" parameterType="int">
+		delete board where num = #{num}
+	</delete>
 </mapper>

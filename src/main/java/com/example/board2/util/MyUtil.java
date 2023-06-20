@@ -44,7 +44,7 @@ public class MyUtil {
 		}
 		
 		if(totalPage > numPerBlock && currentPageSetup > 0) {
-			sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀이이전</a>");
+			sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀이전</a>&nbsp");
 		}
 		
 		// 2. 그냥페이지(6 7 8 9 10) 이동 버튼 만들기
@@ -57,14 +57,19 @@ public class MyUtil {
 			} else {
 				// 현재 선택한 페이지가 아니라면
 				// <a href="list?pageNum=7><7></a>&nbsp;
-				sb.append("<a href=\"" + listUrl + "pageNum" + page + "\">" + page + "</a>&nbsp;");
+				sb.append("<a href=\"" + listUrl + "pageNum=" + page + "\">" + page + "</a>&nbsp;");
 			}
 			page ++;
 		}
 		
 		// 3. 다음▶ 버튼 만들기
+		if(totalPage - currentPageSetup > numPerBlock) {
+			sb.append("<a href=\"" + listUrl + "pageNum=" + currentPageSetup + "\">◀다음</a>&nbsp;");
+		}
+		
 		
 		// 4. 버튼을 합쳐서 문자열로 리턴
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 }

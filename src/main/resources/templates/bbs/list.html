@@ -16,13 +16,13 @@
 					<option value="subject">제목</option>
 					<option value="name">작성자</option>
 					<option value="content">내용</option>
-				</select> <input type="text" name="searchValue" class="textField" /> 
-				<input type="button" value=" 검 색 " class="btn2" onclick="sendIt()" />
+				</select> <input type="text" name="searchValue" class="textField" /> <input
+					type="button" value=" 검 색 " class="btn2" onclick="sendIt()" />
 			</form>
 		</div>
 		<div id="rightHeader">
-			<input type="button" value=" 질문하기 " class="btn2" 
-			onclick="javascript:location.href='/created';" />
+			<input type="button" value=" 질문하기 " class="btn2"
+				onclick="javascript:location.href='/created';" />
 		</div>
 	</div>
 
@@ -38,7 +38,25 @@
 				</tr>
 			</thead>
 			<tbody id="lists">
-				
+				<tr th:if="${#lists.size(lists)} > 0" th:each="board:${lists}">
+					<td class="num" th:text="${board.num}"></td>
+					<td class="subject"><a
+						th:href="|@{${articleUrl}}&num=@{${board.num}}|"
+						th:text="${board.subject}"></a></td>
+					<td class="name" th:text="${board.name}"></td>
+					<td class="created" th:text="${board.created}"></td>
+					<td class="hitCount" th:text="${board.hitCount}"></td>
+				</tr>
+
+				<tr th:if="${#lists.size(dataCount)} > 0">
+					<td colspan="5" id="footer"><a th:utext="${pageIndexList}"></a>
+					</td>
+				</tr>
+
+				<tr th:if="${#lists.size(dataCount)} < 0">
+					<td colspan="5">등록된 게시물이 없습니다.</td>
+				</tr>
+
 			</tbody>
 		</table>
 	</div>
@@ -46,6 +64,17 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
+	var errorMessage1 = [[${param.errorMessage}]];	//param. : get방식의 데이터를 가져온다.(redirect하는 경우)
+	var errorMessage2 = [[${errorMessage}]];	// post방식의 데이터를 가져온다.
+	
+	if(errorMessage1 != null) {
+		alert(errorMessage);
+	}
+	
+	if(errorMessage2 != null) {
+		alert(errorMessage);
+	}
+	
 		function sendIt() {
 			var f = document.searchForm;
 			var str = f.searchValue.value;
@@ -57,7 +86,7 @@
 				return;
 			}
 			
-			f.submit;
+			f.submit();
 		}
 	</script>
 </th:block>
